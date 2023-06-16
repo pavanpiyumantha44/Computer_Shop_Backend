@@ -22,7 +22,7 @@ router.get('/active',(req,res)=>{
 
 router.get('/completedRepairs/:id',(req,res)=>{
     const id = req.params.id;
-    const sql = "SELECT repair1.*, cus.name AS cusName, cus.nic AS cusNIC, cus.email AS cusEmail, cat.name AS categoryName, repitem.*, itm1.description AS itemdesc FROM repair AS repair1 INNER JOIN customer AS cus ON repair1.cusID = cus.cusID INNER JOIN category AS cat ON repair1.catID = cat.cID INNER JOIN repair_items AS repitem ON repair1.repID = repitem.repair_ID INNER JOIN item AS itm1 ON repitem.item_ID = itm1.itemID WHERE repair1.repID=?";
+    const sql = "SELECT repair1.*, cus.name AS cusName, cus.nic AS cusNIC, cus.email AS cusEmail, cat.name AS categoryName, repitem.*, itm1.description AS itemdesc, itm1.unitPrice AS itemPrice FROM repair AS repair1 INNER JOIN customer AS cus ON repair1.cusID = cus.cusID INNER JOIN category AS cat ON repair1.catID = cat.cID INNER JOIN repair_items AS repitem ON repair1.repID = repitem.repair_ID INNER JOIN item AS itm1 ON repitem.item_ID = itm1.itemID WHERE repair1.repID=?";
     db.query(sql,[id],(err,result)=>{
         if(err)
             return res.json({Error:"Error"});
