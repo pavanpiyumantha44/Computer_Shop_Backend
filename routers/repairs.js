@@ -91,4 +91,28 @@ router.delete('/delete/:id',(req,res)=>{
     })
 });
 
+router.get('/availableRepairCount',(req,res)=>{
+    const sql = "SELECT COUNT(*) AS available FROM repair WHERE status=0";
+    db.query(sql,(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
+router.get('/completedRepairCount',(req,res)=>{
+    const sql = "SELECT COUNT(*) AS completed FROM repair WHERE status=1";
+    db.query(sql,(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
+router.get('/mostRepairedItem',(req,res)=>{
+    const sql = "SELECT rep.catID,cat.name AS Item, COUNT(*) AS item_count FROM repair as rep INNER JOIN category AS cat ON rep.catID=cat.cID GROUP BY catID ORDER BY item_count DESC;";
+    db.query(sql,(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
 module.exports = router;
