@@ -41,11 +41,22 @@ router.post('/add',(req,res)=>{
         return res.json({Status:"Success"});
     })
 })
+router.put('/confirmOrder/:id',(req,res)=>{
+    console.log("Confirming order!!");
+    const id = req.params.id;
+    const sql = "UPDATE orders SET status=? WHERE ordID=?";
+    db.query(sql,[0,id],(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success"});
+    })
+});
+
 router.put('/update/:id',(req,res)=>{
     console.log("Updating Order!!");
     const id = req.params.id;
-    const sql = "UPDATE orders SET brandID=?, catID=?, description=?, ordQty=?, advance=?, unitPrice=? WHERE ordID=?";
-    db.query(sql,[req.body.brand,req.body.category,req.body.description,req.body.quantity,req.body.advance,req.body.unitPrice,id],(err,result)=>{
+    const sql = "UPDATE orders SET brandID=?, catID=?, description=?, ordQty=?, advance=?, unitPrice=?, status=? WHERE ordID=?";
+    db.query(sql,[req.body.brand,req.body.category,req.body.description,req.body.quantity,req.body.advance,req.body.unitPrice,req.body.status,id],(err,result)=>{
         if(err)
             return res.json({Error:"Error"});
         return res.json({Status:"Success"});

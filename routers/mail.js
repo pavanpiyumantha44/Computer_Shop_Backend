@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const tls = require('tls');
 const router = express.Router();
+require('dotenv').config;
 
 router.post('/orderConfirmation',(req,res)=>{
     console.log("Send Mail");
@@ -11,8 +12,8 @@ router.post('/orderConfirmation',(req,res)=>{
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-        user: 'kasunk058@gmail.com',
-        pass: 'rclqjgfvtmihbugu'
+        user: process.env.EMAIL,
+        pass: 'pwazrifihrqmkhxj'
         },
         tls: {
         rejectUnauthorized: false
@@ -21,7 +22,7 @@ router.post('/orderConfirmation',(req,res)=>{
   
     // Rest of the code to send the email...    
     const mailOptions = {
-        from: 'kasunk058@gmail.com',
+        from: process.env.EMAIL,
         to: req.body.email,
         subject: 'Your order just arrived !!',
         html: `<div>

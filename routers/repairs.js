@@ -12,6 +12,16 @@ router.get('/',(req,res)=>{
     })
 })
 
+router.get('/repaired',(req,res)=>{
+    // const sql = "SELECT * FROM repair";
+    const sql = "SELECT repair1.*, cus.name AS cusName, cus.nic AS cusNIC, cat.name AS categoryName FROM repair AS repair1 INNER JOIN customer AS cus ON repair1.cusID = cus.cusID INNER JOIN category AS cat ON repair1.catID = cat.cID WHERE repair1.status=1;";
+    db.query(sql,(err,result)=>{
+        if(err)
+        return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
+
 router.get('/read/:id',(req,res)=>{
     const id = req.params.id;
     const sql = "SELECT repair1.*, cus.name AS cusName, cus.nic AS cusNIC, cus.email AS cusEmail,cus.address AS cusAddress, cat.name AS categoryName FROM repair AS repair1 INNER JOIN customer AS cus ON repair1.cusID = cus.cusID INNER JOIN category AS cat ON repair1.catID = cat.cID WHERE repair1.repID=?";

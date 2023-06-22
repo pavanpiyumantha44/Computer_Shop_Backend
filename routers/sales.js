@@ -9,7 +9,7 @@ router.post('/add',(req,res)=>{
         records.push(req.body[i]);
     }
     const sql = 'INSERT INTO sales (invoiceID, itemID, name, description, qty, unitPrice, total) VALUES ?';
-    const values = records.map((record) => [record.invoiceID, record.id, record.name, record.desc, record.qty, record.price, record.tot]);
+    const values = records.map((record) => [record.invoiceID, record.id, record.name, record.desc, record.qty, record.price, record.itemPrice]);
 
     db.query(sql, [values], (error, results) => {
     if (error) {

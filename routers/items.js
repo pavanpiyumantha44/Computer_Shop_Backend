@@ -20,7 +20,7 @@ const upload = multer({
 
 
 router.get('/',(req,res)=>{
-    const sql = "SELECT * FROM item";
+    const sql = "SELECT itm1.*, brd.name AS brandName, cat.name AS categoryName FROM item AS itm1 INNER JOIN brand AS brd ON itm1.bID = brd.bID INNER JOIN category AS cat ON itm1.catID = cat.cID;";
     db.query(sql,(err,result)=>{
         if(err)
             return res.json({Error:"Error"});
