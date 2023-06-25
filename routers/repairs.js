@@ -78,7 +78,7 @@ router.post('/add',(req,res)=>{
         return res.json({Status:"Success"});
     })
 })
-router.put('/update/:id',(req,res)=>{
+router.put('/updateRepaired/:id',(req,res)=>{
     const id = req.params.id;
     const sql = "UPDATE repair SET repair_details=?,service_charge=?, status=? WHERE repID=?";
     db.query(sql,[req.body.issue,req.body.service_charge,1,id],(err,result)=>{

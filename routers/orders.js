@@ -22,7 +22,7 @@ router.get('/read/:id',(req,res)=>{
 })
 router.post('/add',(req,res)=>{
     console.log("Inserting order...");
-    const sql = "INSERT INTO orders(cusID,brandID,catID,description,ordQty,advance,unitPrice,status,isActive) VALUES(?)";
+    const sql = "INSERT INTO orders(cusID,brandID,catID,description,ordQty,advance,unitPrice,totalPrice,status,isActive) VALUES(?)";
     const values = [
         req.body.cusID,
         req.body.brand,
@@ -31,6 +31,7 @@ router.post('/add',(req,res)=>{
         req.body.quantity,
         req.body.advance,
         req.body.unitPrice,
+        Number(req.body.unitPrice*req.body.quantity),
         1,
         1,
     ];
