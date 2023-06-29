@@ -25,6 +25,19 @@ router.post('/add',(req,res)=>{
       
 })
 
+router.post('/addInvoice',(req,res)=>{
+    sql = "INSERT INTO invoice(invoiceID,totalAmount,paidAmount) VALUES(?)";
+    const values = [
+        req.body.invoiceID,
+        req.body.total,
+        req.body.userPaid
+    ]
+    db.query(sql,[values],(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success"});
+    })
+})
 
 router.get('/lastID',(req,res)=>{
     const sql = "SELECT * FROM sales ORDER BY added_Date DESC LIMIT 1";

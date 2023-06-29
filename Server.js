@@ -18,6 +18,7 @@ const settings = require('./routers/settings');
 const sales = require('./routers/sales');
 const reports = require('./routers/reports');
 const mail = require('./routers/mail');
+const payment = require('./routers/payment');
 
 require('dotenv').config();
 app.use(express.json());
@@ -43,6 +44,7 @@ app.use('/dashboard/settings',settings);
 app.use('/billing',sales);
 app.use('/dashboard/getReport',reports);
 app.use('/mail',mail);
+app.use('/payments/',payment);
 
 app.get('/',verifyUser,(req,res)=>
 {
