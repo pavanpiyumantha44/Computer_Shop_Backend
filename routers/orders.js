@@ -72,4 +72,25 @@ router.delete('/delete/:id',(req,res)=>{
         return res.json({Status:"Success"});
     })
 })
+
+router.get('/advancePayment',(req,res)=>{
+    const sql = "SELECT ord1.*, cus1.name AS cusName, cus1.nic AS cusNIC, cat1.name AS categoryName, brd1.name AS brandName FROM orders AS ord1 INNER JOIN customer AS cus1 on ord1.cusID = cus1.cusID INNER JOIN category AS cat1 ON ord1.catID = cat1.cID INNER JOIN brand AS brd1 ON ord1.brandID = brd1.bID WHERE ord1.advance>0 AND ord1.isAdvancePaid=0 AND ord1.status=0;";
+    db.query(sql,(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
+
+router.get('/fullPayment',(req,res)=>{
+    const sql = "SELECT ord1.*, cus1.name AS cusName, cus1.nic AS cusNIC, cat1.name AS categoryName, brd1.name AS brandName FROM orders AS ord1 INNER JOIN customer AS cus1 on ord1.cusID = cus1.cusID INNER JOIN category AS cat1 ON ord1.catID = cat1.cID INNER JOIN brand AS brd1 ON ord1.brandID = brd1.bID WHERE ord1.status=0;";
+    db.query(sql,(err,result)=>{
+        if(err)
+            return res.json({Error:"Error"});
+        return res.json({Status:"Success",Result:result});
+    })
+})
+
+
+
 module.exports = router;
