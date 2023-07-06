@@ -45,7 +45,7 @@ router.get('/create/getCategory',(req,res)=>{
     })
 })
 router.get('/read/:id',(req,res)=>{
-    const sql = "SELECT * FROM item WHERE itemID=?";
+    const sql = "SELECT itm1.*, brnd1.name AS brandName, cat1.name AS categoryName FROM item AS itm1 INNER JOIN brand AS brnd1 ON itm1.bID = brnd1.bID INNER join category AS cat1 ON itm1.catID = cat1.cID WHERE itemID=?";
     const id = req.params.id;
     db.query(sql,[id],(err,result)=>{
         if(err)
@@ -79,10 +79,10 @@ router.post('/create',upload.single('image'),(req,res)=>{
 })
 
 router.put('/update/:id',(req,res)=>{
-    const sql = "UPDATE item SET name=? , qty=?, price =? unitPrice=?, status=? WHERE itemID=?";
+    const sql = "UPDATE item SET catID=?, bID=?, name=?, description=?, qty=?, unitPrice=?, status=? WHERE itemID=?";
     const id = req.params.id;
 
-    db.query(sql,[req.body.name,req.body.qty,req.body.price,req.body.unitPrice,req.body.status,id],(err,result)=>{
+    db.query(sql,[req.body.catID,req.body.bID,req.body.name,req.body.description,req.body.quantity,req.body.unitPrice,req.body.status,id],(err,result)=>{
         if(err)
             return res.json({Error:"Error"});
         return res.json({Status:"Success"});

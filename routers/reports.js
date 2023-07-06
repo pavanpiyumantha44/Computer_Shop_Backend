@@ -18,7 +18,7 @@ router.post('/sales',(req,res)=>{
 
 router.get('/mostSold',(req,res)=>{
     console.log("Getting most sold items");
-    const sql = "SELECT sales1.itemID,itm1.name AS ItemName, brd1.name AS brandName, COUNT(*) AS item_count FROM sales as sales1 INNER JOIN item AS itm1 ON sales1.itemID=itm1.itemID INNER JOIN brand as brd1 ON itm1.bID = brd1.bID GROUP BY itemID ORDER BY item_count DESC LIMIT 5;";
+    const sql = "SELECT sales1.itemID,itm1.name AS ItemName, cat1.name AS catName, brd1.name AS brandName, COUNT(*) AS item_count FROM sales as sales1 INNER JOIN item AS itm1 ON sales1.itemID=itm1.itemID INNER JOIN brand as brd1 ON itm1.bID = brd1.bID INNER JOIN category AS cat1 ON itm1.catID = cat1.cID GROUP BY itemID ORDER BY item_count DESC LIMIT 5;";
     db.query(sql,(err,result)=>{
         if(err)
             res.json({Error:"Error"});
@@ -38,7 +38,7 @@ router.get('/lowestQty',(req,res)=>{
 
 router.get('/totalRepairEarning',(req,res)=>{
     console.log("Getting Lowest items qty");
-    const sql = "SELECT sum(totalAmount) AS total FROM `payment` GROUP BY repair_ID;";
+    const sql = "SELECT sum(totalAmount) AS total FROM `payment` GROUP BY repair_ID DESC;";
     db.query(sql,(err,result)=>{
         if(err)
             res.json({Error:"Error"});
